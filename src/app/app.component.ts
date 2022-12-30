@@ -96,14 +96,14 @@ export class AppComponent implements OnInit {
 
     this.cityService.changeCity(id, city).subscribe(
       (response: any) => {
-        this.cities = response;
+        console.log(id);
+        this.cities = [city];
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
       }
     );
   }
-
   getCityByName() {
     const inputName = document.getElementById('searchName') as HTMLInputElement
     let inName: string = inputName?.value == null ? '' : inputName.value;
