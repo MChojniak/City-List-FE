@@ -3,6 +3,7 @@ import {HttpErrorResponse} from "@angular/common/http";
 import {City} from "./cities/city";
 import {CityService} from "./cities/city.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {CityPageDto} from "./cities/cityPageDto";
 
 @Component({
   selector: 'clfe-root',
@@ -22,23 +23,13 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.getCities();
-    this.getAmountOfCityPages();
   }
-
-  public getAmountOfCityPages(): void {
-    this.cityService.getAmountOfCityPages().subscribe(
-      (response: number) => {
-        this.maxPageNumber = response;
-      }, (error: HttpErrorResponse) => {
-        alert(error.message);
-      })
-  }
-
 
   public getCities(): void {
     this.cityService.getCities(this.pageNumber).subscribe(
-      (response: City[]) => {
-        this.cities = response;
+      (response: CityPageDto) => {
+        this.cities = response.cityDtoList;
+        this.maxPageNumber = response.totalPages;
       },
       (error: HttpErrorResponse) => {
         alert(error.message);

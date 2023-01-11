@@ -2,6 +2,9 @@ import {Observable} from "rxjs";
 import {Injectable} from "@angular/core";
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {City} from "./city";
+import {CityPageDto} from "./cityPageDto";
+
+
 
 @Injectable({
   providedIn: 'root'
@@ -16,10 +19,10 @@ export class CityService {
   public getAmountOfCityPages(): Observable<number>{
     return this.http.get<number>(`${this.apiServerUrl}/cities/max-pages`)
   }
-  public getCities(pageNumber: number): Observable<City[]>{
+  public getCities(pageNumber: number): Observable<CityPageDto>{
     let queryParams = new HttpParams();
     queryParams = queryParams.append("page",pageNumber);
-    return this.http.get<City[]>(`${this.apiServerUrl}/cities/`, {params: queryParams})
+    return  this.http.get<CityPageDto>(`${this.apiServerUrl}/cities/`, {params: queryParams});
   }
   public getCitiesByName(name: string): Observable<City[]>{
     return this.http.get<City[]>(`${this.apiServerUrl}/cities/name/${name}`)
